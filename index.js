@@ -79,7 +79,13 @@ function animate() {
   canvasContext.fillStyle = "white";
   canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 
+  /**
+   * save and restore avoid to sclae the image infinitely
+   */
+  canvasContext.save()
+  canvasContext.scale(4, 4)
   background.update()
+  canvasContext.restore()
 
   player1.update();
   player2.update();
