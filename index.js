@@ -1,6 +1,26 @@
 const canvas = document.querySelector("canvas");
 const canvasContext = canvas.getContext("2d"); // Where passing what kind of API we want to wrap 2d or 3d
 
+const floorCollisions2D = []
+
+for (let i = 0; i < floorCollisions.length; i += 36) {
+    floorCollisions2D.push(floorCollisions.slice(i, i + 36))    
+}
+
+const collisionBlocks = []
+floorCollisions2D.forEach((row, y) => {
+    row.forEach((symbol, x) => {
+        if (symbol === 202) {
+            collisionBlocks.push(new CollisionBlock({
+                position: {
+                    x: x * 16,
+                    y: y * 16,
+                }
+            }))
+        }
+    })  
+});
+
 canvas.width = 1024;
 canvas.height = 576;
 
@@ -9,53 +29,6 @@ const scaledCanvas = {
     height: canvas.height / 4
 }
 const gravity = 0.5;
-
-class Sprite {
-    constructor({ position, imageSrc }) {
-        this.position = position;
-        this.image = new Image();
-        this.image.src = imageSrc;
-    }
-    
-    draw() {
-        if (!this.image) return
-        canvasContext.drawImage(this.image, this.position.x, this.position.y);
-    }
-    
-    update() {
-        this.draw()
-    }
-}
-
-class Player {  
-    constructor(position) {
-        this.position = position;
-        this.velocity = {
-            x: 0,
-            y: 1,
-        };
-        this.height = 100;
-    }
-    
-    draw() {
-        canvasContext.fillStyle = "red";
-        canvasContext.fillRect(this.position.x, this.position.y, 100, this.height);
-    }
-    
-    update() {
-        this.draw();
-        
-        this.position.y += this.velocity.y;
-        this.position.x += this.velocity.x;
-        
-        /**
-         * Logic when the player hit the bottom of canvas
-         */
-        if (this.position.y + this.height + this.velocity.y < canvas.height)
-        this.velocity.y += gravity;
-        else this.velocity.y = 0;
-    }
-}
 
 const player1 = new Player({
     x: 0,
@@ -74,7 +47,6 @@ const background = new Sprite({
     },
     imageSrc: './img/background.png'
 })
-console.log(-background.image.height + scaledCanvas.height);
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
@@ -96,7 +68,11 @@ function animate() {
    */
   canvasContext.translate(0, -background.image.height + scaledCanvas.height)
   background.update()
+  collisionBlocks.forEach(collision => {
+    collision.update()
+  })
   canvasContext.restore()
+
 
   player1.update();
   player2.update();
