@@ -5,7 +5,25 @@ canvas.width = 1024;
 canvas.height = 576;
 
 const gravity = 0.5;
-class Player {
+
+class Sprite {
+  constructor({ position, imageSrc }) {
+    this.position = position;
+    this.image = new Image();
+    this.image.src = imageSrc;
+  }
+
+  draw() {
+    if (!this.image) return
+    canvasContext.drawImage(this.image, this.position.x, this.position.y);
+  }
+
+  update() {
+    this.draw()
+  }
+}
+
+class Player {  
   constructor(position) {
     this.position = position;
     this.velocity = {
@@ -31,7 +49,7 @@ class Player {
      */
     if (this.position.y + this.height + this.velocity.y < canvas.height)
       this.velocity.y += gravity;
-    else this.velocity.y = 0
+    else this.velocity.y = 0;
   }
 }
 
@@ -45,6 +63,14 @@ const player2 = new Player({
   y: 0,
 });
 
+const background = new Sprite({
+    position: {
+        x: 0,
+        y: 0,
+    },
+    imageSrc: './img/background.png'
+})
+
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
  */
@@ -53,59 +79,61 @@ function animate() {
   canvasContext.fillStyle = "white";
   canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 
+  background.update()
+
   player1.update();
   player2.update();
 
-  player1.velocity.x = 0
-  if (keys.d.pressed) player1.velocity.x = 1
-  else if (keys.a.pressed) player1.velocity.x = -1
+  player1.velocity.x = 0;
+  if (keys.d.pressed) player1.velocity.x = 1;
+  else if (keys.a.pressed) player1.velocity.x = -1;
 }
 /**
  * Object to reference if any key is pressed
  */
 const keys = {
-    d: {
-        pressed: false
-    },
-    a: {
-        pressed: false
-    }
-}
+  d: {
+    pressed: false,
+  },
+  a: {
+    pressed: false,
+  },
+};
 
 animate();
 
 /**
- * Both eventListener are used for detecting if 
- * a key is pressed or not 
+ * Both eventListener are used for detecting if
+ * a key is pressed or not
  */
-window.addEventListener('keydown', (event) => {
-    switch (event.key) {
-        case 'd':
-            keys.d.pressed = true
-            break
-        case 'a':
-            keys.a.pressed = true
-            break
-        case 'w':
-            player1.velocity.y = -15
-            break
-        default:
-            break;
-    }
-})
+window.addEventListener("keydown", (event) => {
+  switch (event.key) {
+    case "d":
+      keys.d.pressed = true;
+      break;
+    case "a":
+      keys.a.pressed = true;
+      break;
+    case "w":
+      player1.velocity.y = -15;
+      break;
+    default:
+      break;
+  }
+});
 
-window.addEventListener('keyup', (event) => {
-    switch (event.key) {
-        case 'd':
-            keys.d.pressed = false
-            break
-        case 'a':
-            keys.a.pressed = false
-            break
-        case 'w':
-            player1.velocity.y = -15
-            break
-        default:
-            break;
-    }
-})
+window.addEventListener("keyup", (event) => {
+  switch (event.key) {
+    case "d":
+      keys.d.pressed = false;
+      break;
+    case "a":
+      keys.a.pressed = false;
+      break;
+    case "w":
+      player1.velocity.y = -15;
+      break;
+    default:
+      break;
+  }
+});
