@@ -4,8 +4,38 @@ const canvasContext = canvas.getContext("2d"); // Where passing what kind of API
 canvas.width = 1024
 canvas.height = 576
 
+const gravity = 0.5
+class Player {
+    constructor(position) {
+        this.position = position
+        this.velocity = {
+            x: 0,
+            y: 1,
+        }
+    }
 
-let y = 100
+    draw() {
+        canvasContext.fillStyle = 'red'
+        canvasContext.fillRect(this.position.x, this.position.y, 100, 100)
+    }
+
+    update() {
+        this.draw()
+        this.position.y += this.velocity.y
+        this.velocity.y += gravity    
+    }
+}
+
+
+const player1 = new Player({
+    x: 0,
+    y: 0,
+})
+
+const player2 = new Player({
+    x: 200,
+    y: 0,
+})
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
@@ -15,9 +45,9 @@ function animate() {
     canvasContext.fillStyle = "white"
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
 
-    canvasContext.fillStyle = 'red'
-    canvasContext.fillRect(200, y, 100, 100)
-    y++
+    player1.update()
+    player2.update()
+    
 }
 
 animate()
