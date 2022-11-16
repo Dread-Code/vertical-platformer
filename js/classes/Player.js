@@ -1,29 +1,81 @@
-class Player {  
-    constructor(position) {
-        this.position = position;
-        this.velocity = {
-            x: 0,
-            y: 1,
-        };
-        this.height = 100;
+class Player {
+  constructor({ position, floorCollisionsBlocks }) {
+    this.position = position;
+    this.velocity = {
+      x: 0,
+      y: 1,
+    };
+    this.height = 25;
+    this.width = 25;
+    this.floorCollisionsBlocks = floorCollisionsBlocks;
+  }
+
+  draw() {
+    canvasContext.fillStyle = "red";
+    canvasContext.fillRect(
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    );
+  }
+
+  update() {
+    this.draw();
+    this.position.x += this.velocity.x;
+    this.checkForHorizontalCollision();
+    this.applyGravity();
+    this.checkForVerticalCollision();
+  }
+
+  applyGravity() {
+    this.position.y += this.velocity.y;
+    this.velocity.y += gravity;
+  }
+
+  checkForHorizontalCollision() {
+    for (let i = 0; i < this.floorCollisionsBlocks.length; i++) {
+      const collision = this.floorCollisionsBlocks[i];
+      if (
+        coliisionDetector({
+          object1: this,
+          object2: collision,
+        })
+      ) {
+        if (this.velocity.x > 0) {
+          this.velocity.x = 0;
+          this.position.x = collision.position.x - this.width - 0.01;
+          break;
+        }
+        if (this.velocity.x < 0) {
+          this.velocity.x = 0;
+          this.position.x = collision.position.x + collision.width + 0.01;
+          break;
+        }
+      }
     }
-    
-    draw() {
-        canvasContext.fillStyle = "red";
-        canvasContext.fillRect(this.position.x, this.position.y, 100, this.height);
+  }
+
+  checkForVerticalCollision() {
+    for (let i = 0; i < this.floorCollisionsBlocks.length; i++) {
+      const collision = this.floorCollisionsBlocks[i];
+      if (
+        coliisionDetector({
+          object1: this,
+          object2: collision,
+        })
+      ) {
+        if (this.velocity.y > 0) {
+          this.velocity.y = 0;
+          this.position.y = collision.position.y - this.height - 0.01;
+          break;
+        }
+        if (this.velocity.y < 0) {
+          this.velocity.y = 0;
+          this.position.y = collision.position.y + collision.height + 0.01;
+          break;
+        }
+      }
     }
-    
-    update() {
-        this.draw();
-        
-        this.position.y += this.velocity.y;
-        this.position.x += this.velocity.x;
-        
-        /**
-         * Logic when the player hit the bottom of canvas
-         */
-        if (this.position.y + this.height + this.velocity.y < canvas.height)
-        this.velocity.y += gravity;
-        else this.velocity.y = 0;
-    }
+  }
 }
