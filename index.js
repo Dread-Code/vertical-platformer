@@ -1,25 +1,8 @@
 const canvas = document.querySelector("canvas");
 const canvasContext = canvas.getContext("2d"); // Where passing what kind of API we want to wrap 2d or 3d
 
-const floorCollisions2D = []
-
-for (let i = 0; i < floorCollisions.length; i += 36) {
-    floorCollisions2D.push(floorCollisions.slice(i, i + 36))    
-}
-
-const collisionBlocks = []
-floorCollisions2D.forEach((row, y) => {
-    row.forEach((symbol, x) => {
-        if (symbol === 202) {
-            collisionBlocks.push(new CollisionBlock({
-                position: {
-                    x: x * 16,
-                    y: y * 16,
-                }
-            }))
-        }
-    })  
-});
+const floorCollisionsBlocks = collisionBlocksGenerator(floorCollisions)
+const platformCollisionBlocks = collisionBlocksGenerator(platformCollisions)
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -68,7 +51,10 @@ function animate() {
    */
   canvasContext.translate(0, -background.image.height + scaledCanvas.height)
   background.update()
-  collisionBlocks.forEach(collision => {
+  floorCollisionsBlocks.forEach(collision => {
+    collision.update()
+  })
+  platformCollisionBlocks.forEach(collision => {
     collision.update()
   })
   canvasContext.restore()
