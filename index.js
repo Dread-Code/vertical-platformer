@@ -4,5 +4,20 @@ const canvasContext = canvas.getContext("2d"); // Where passing what kind of API
 canvas.width = 1024
 canvas.height = 576
 
-canvasContext.fillStyle = "white"
-canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
+let y = 100
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+ */
+function animate() {
+    window.requestAnimationFrame(animate)
+    canvasContext.fillStyle = "white"
+    canvasContext.fillRect(0, 0, canvas.width, canvas.height)
+
+    canvasContext.fillStyle = 'red'
+    canvasContext.fillRect(200, y, 100, 100)
+    y++
+}
+
+animate()
