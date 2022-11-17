@@ -60,7 +60,7 @@ function animate() {
   player.velocity.x = 0;
   if (keys[Direction.Right].pressed) {
     player.switchSprite(Animations.Run);
-    player.velocity.x = 1;
+    player.velocity.x = 2;
   } else if (keys[Direction.Left].pressed) player.velocity.x = -1;
   else if ( player.velocity.x === 0)
     player.switchSprite(Animations.Idle);

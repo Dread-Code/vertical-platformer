@@ -22,13 +22,15 @@ class Player extends Sprite {
       width: 10,
       height: 10,
     };
-    this.animations = animations
+    this.animations = animations;
   }
 
-  switchSprite(key){
-    if(this.image === this.animations[key]) return
+  switchSprite(key) {
+    if (this.image === this.animations[key]) return;
 
-    this.image = this.animations[key].image
+    this.image = this.animations[key].image;
+    this.frameBuffer = this.animations[key].frameBuffer;
+    this.frameRate = this.animations[key].frameRate;
   }
 
   update() {
