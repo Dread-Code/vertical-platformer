@@ -61,10 +61,10 @@ function animate() {
   if (keys[Direction.Right].pressed) {
     player.switchSprite(Animations.Run);
     player.velocity.x = 1;
-  } else {
+  } else if (keys[Direction.Left].pressed) player.velocity.x = -1;
+  else if ( player.velocity.x === 0)
     player.switchSprite(Animations.Idle);
-  }
-  if (keys[Direction.Left].pressed) player.velocity.x = -1;
+
 
   canvasContext.restore();
 }
