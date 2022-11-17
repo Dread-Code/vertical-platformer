@@ -1,4 +1,4 @@
-const collisionBlocksGenerator = (collisions) => {
+const collisionBlocksGenerator = (collisions, height = 16) => {
   const collisions2D = [];
   for (let i = 0; i < collisions.length; i += 36) {
     collisions2D.push(collisions.slice(i, i + 36));
@@ -13,6 +13,7 @@ const collisionBlocksGenerator = (collisions) => {
               x: x * 16,
               y: y * 16,
             },
+            height
           })
         );
       }

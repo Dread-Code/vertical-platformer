@@ -1,7 +1,8 @@
 const canvas = document.querySelector("canvas");
 const canvasContext = canvas.getContext("2d"); // Where passing what kind of API we want to wrap 2d or 3d
 
-const collisionsBlocks = collisionBlocksGenerator(collisionsMerged);
+const collisionsBlocks = collisionBlocksGenerator(floorCollisions);
+const platformCollisionsBlocks = collisionBlocksGenerator(platformCollisions, 4);
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -18,6 +19,7 @@ const player = new Player({
     y: 300,
   },
   collisionsBlocks,
+  platformCollisionsBlocks,
   imageSrc: "./img/warrior/Idle.png",
   frameRate: 8,
   animations: animationsImageInserter(animationsMap),
@@ -52,6 +54,9 @@ function animate() {
   canvasContext.translate(0, -background.image.height + scaledCanvas.height);
   background.update();
   collisionsBlocks.forEach((collision) => {
+    collision.update();
+  });
+  platformCollisionsBlocks.forEach((collision) => {
     collision.update();
   });
 
