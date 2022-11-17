@@ -39,13 +39,13 @@ function animate() {
    * save and restore avoid to sclae the image infinitely
    */
   canvasContext.save();
-  //   canvasContext.scale(4, 4);
-  //   // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/translate
-  //   /**
-  //    * Translate the origin position background.position {x: 0, y: 0}
-  //    * to the unities passed through the the function
-  //    */
-  //   canvasContext.translate(0, -background.image.height + scaledCanvas.height);
+    canvasContext.scale(4, 4);
+    // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/translate
+    /**
+     * Translate the origin position background.position {x: 0, y: 0}
+     * to the unities passed through the the function
+     */
+    canvasContext.translate(0, -background.image.height + scaledCanvas.height);
   background.update();
   collisionsBlocks.forEach((collision) => {
     collision.update();
@@ -86,7 +86,7 @@ window.addEventListener("keydown", (event) => {
       keys.a.pressed = true;
       break;
     case "w":
-      player1.velocity.y = -15;
+      player1.velocity.y = -8;
       break;
     default:
       break;
@@ -100,9 +100,6 @@ window.addEventListener("keyup", (event) => {
       break;
     case "a":
       keys.a.pressed = false;
-      break;
-    case "w":
-      player1.velocity.y = -15;
       break;
     default:
       break;
