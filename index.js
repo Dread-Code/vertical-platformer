@@ -33,6 +33,13 @@ const background = new Sprite({
   imageSrc: "./img/background.png",
 });
 
+const camera = {
+    position: {
+        x: 0,
+        y: 0,
+    },
+}
+
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
  */
@@ -51,7 +58,7 @@ function animate() {
    * Translate the origin position background.position {x: 0, y: 0}
    * to the unities passed through the the function
    */
-  canvasContext.translate(0, -background.image.height + scaledCanvas.height);
+  canvasContext.translate(camera.position.x, -background.image.height + scaledCanvas.height);
   background.update();
   collisionsBlocks.forEach((collision) => {
     collision.update();
@@ -67,12 +74,14 @@ function animate() {
     player.switchSprite(Animations.Run);
     player.velocity.x = 2;
     player.setLastKey(Direction.Right);
+    player.shouldPanCameraToTheLeft({ canvas, camera });
   } else if (keysState[Direction.Left].pressed) {
     player.switchSprite(Animations.RunLeft);
     player.velocity.x = -2;
     player.setLastKey(Direction.Left);
+    player.shouldPanCameraToTheRight({ canvas, camera });
   } else if (keysState[Direction.Up].pressed) {
-    player.velocity.y = -4;
+    player.velocity.y = -3;
   } else if (player.velocity.x === 0 && player.lastKey === Direction.Right)
     player.switchSprite(Animations.Idle);
   else if (player.velocity.x === 0 && player.lastKey === Direction.Left)

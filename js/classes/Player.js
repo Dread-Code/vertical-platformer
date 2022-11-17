@@ -26,6 +26,14 @@ class Player extends Sprite {
     };
     this.animations = animations;
     this.lastKey = null;
+    this.camerabox = {
+      position: {
+        x: this.position.x,
+        y: this.position.y,
+      },
+      width: 200,
+      height: 80,
+    }
   }
 
   switchSprite(key) {
@@ -41,23 +49,34 @@ class Player extends Sprite {
     this.updateFrames();
     this.updateHitbox();
 
+    this.updateCamera()
     // draws out the image
-    canvasContext.fillStyle = "rgb(0, 255, 0, 0.6)";
+    canvasContext.fillStyle = "rgb(0, 0, 255  , 0.2 )";
     canvasContext.fillRect(
-      this.position.x,
-      this.position.y,
-      this.width,
-      this.height
+      this.camerabox.position.x,
+      this.camerabox.position.y,
+      this.camerabox.width,
+      this.camerabox.height
     );
 
-    // draws out the hitbox
-    canvasContext.fillStyle = "rgb(255, 0, 0, 0.5)";
-    canvasContext.fillRect(
-      this.hitbox.position.x,
-      this.hitbox.position.y,
-      this.hitbox.width,
-      this.hitbox.height
-    );
+
+    // draws out the image
+    // canvasContext.fillStyle = "rgb(0, 255, 0, 0.6)";
+    // canvasContext.fillRect(
+    //   this.position.x,
+    //   this.position.y,
+    //   this.width,
+    //   this.height
+    // );
+
+    // // draws out the hitbox
+    // canvasContext.fillStyle = "rgb(255, 0, 0, 0.5)";
+    // canvasContext.fillRect(
+    //   this.hitbox.position.x,
+    //   this.hitbox.position.y,
+    //   this.hitbox.width,
+    //   this.hitbox.height
+    // );
 
     this.draw();
     this.position.x += this.velocity.x;
@@ -83,6 +102,36 @@ class Player extends Sprite {
       height: 27,
     };
   }
+
+  updateCamera(){
+    this.camerabox = {
+      position: {
+        x: this.position.x - 60,
+        y: this.position.y,
+      },
+      width: 200,
+      height: 80,
+    }
+  }
+
+  shouldPanCameraToTheLeft({canvas, camera}){
+    const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width;
+    const scaledDownCanvasWidth = canvas.width / 4;
+    if (cameraboxRightSide >= 576) return
+    if (cameraboxRightSide >= scaledDownCanvasWidth + Math.abs(camera.position.x)){
+      camera.position.x -= this.velocity.x
+    }
+  }
+  shouldPanCameraToTheRight({canvas, camera}){
+    const cameraboxLeftSide = this.camerabox.position.x;
+    if (cameraboxLeftSide <= 0) return
+    // camera.position.x is the current translation that have the camera
+    if (cameraboxLeftSide <=  Math.abs(camera.position.x)){
+      camera.position.x -= this.velocity.x
+    }
+  }
+
+
 
   checkForHorizontalCollision() {
     for (let i = 0; i < this.collisionsBlocks.length; i++) {
