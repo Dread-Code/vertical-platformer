@@ -14,4 +14,9 @@ const animationsMap = {
         frameRate: 2,
         frameBuffer: 3
     },
+    [Animations.Fall]: {
+        imageSrc: './img/warrior/Fall.png',
+        frameRate: 2,
+        frameBuffer: 3
+    },
 }

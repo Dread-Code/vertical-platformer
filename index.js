@@ -64,10 +64,11 @@ function animate() {
   } else if (keysState[Direction.Left].pressed) player.velocity.x = -1;
   else if (keysState[Direction.Up].pressed) {
     player.velocity.y = -8;
-    player.switchSprite(Animations.Jump)
   }
-  else if ( player.velocity.x === 0)
-    player.switchSprite(Animations.Idle);
+  else if ( player.velocity.x === 0)player.switchSprite(Animations.Idle);
+
+    if(player.velocity.y < 0) player.switchSprite(Animations.Jump)
+    else if(player.velocity.y > 0) player.switchSprite(Animations.Fall)
 
   canvasContext.restore();
 }

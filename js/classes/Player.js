@@ -65,8 +65,8 @@ class Player extends Sprite {
   }
 
   applyGravity() {
-    this.position.y += this.velocity.y;
     this.velocity.y += gravity;
+    this.position.y += this.velocity.y;
   }
 
   updateHitbox() {

@@ -1,7 +1,8 @@
 const Animations = {
     Idle: 'Idle',
     Run: 'Run',
-    Jump: 'Jump'
+    Jump: 'Jump',
+    Fall: 'Fall'
 }
 
 const Direction = {
