@@ -5,6 +5,7 @@ class Player extends Sprite {
     imageSrc,
     frameRate,
     scale = 0.5,
+    animations,
   }) {
     super({ imageSrc, frameRate, scale });
     this.position = position;
@@ -21,6 +22,13 @@ class Player extends Sprite {
       width: 10,
       height: 10,
     };
+    this.animations = animations
+  }
+
+  switchSprite(key){
+    if(this.image === this.animations[key]) return
+
+    this.image = this.animations[key].image
   }
 
   update() {
