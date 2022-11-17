@@ -23,6 +23,7 @@ class Player extends Sprite {
       height: 10,
     };
     this.animations = animations;
+    this.lastKey = null;
   }
 
   switchSprite(key) {
@@ -140,5 +141,9 @@ class Player extends Sprite {
         }
       }
     }
+  }
+
+  setLastKey(lastKey) {
+    this.lastKey = lastKey;
   }
 }

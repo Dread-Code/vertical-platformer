@@ -1,13 +1,17 @@
 const Animations = {
-    Idle: 'Idle',
-    Run: 'Run',
-    Jump: 'Jump',
-    Fall: 'Fall'
-}
+  Idle: "Idle",
+  IdleLeft: "IdleLeft",
+  Run: "Run",
+  RunLeft: "RunLeft",
+  Jump: "Jump",
+  JumpLeft: "JumpLeft",
+  Fall: "Fall",
+  FallLeft: "FallLeft",
+};
 
 const Direction = {
-    Up: 'w',
-    Down: 's',
-    Left: 'a',
-    Right: 'd',
-  };
+  Up: "w",
+  Down: "s",
+  Left: "a",
+  Right: "d",
+};

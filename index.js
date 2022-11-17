@@ -61,14 +61,26 @@ function animate() {
   if (keysState[Direction.Right].pressed) {
     player.switchSprite(Animations.Run);
     player.velocity.x = 2;
-  } else if (keysState[Direction.Left].pressed) player.velocity.x = -1;
-  else if (keysState[Direction.Up].pressed) {
+    player.setLastKey(Direction.Right);
+  } else if (keysState[Direction.Left].pressed) {
+    player.switchSprite(Animations.RunLeft);
+    player.velocity.x = -2;
+    player.setLastKey(Direction.Left);
+  } else if (keysState[Direction.Up].pressed) {
     player.velocity.y = -8;
-  }
-  else if ( player.velocity.x === 0)player.switchSprite(Animations.Idle);
+  } else if (player.velocity.x === 0 && player.lastKey === Direction.Right)
+    player.switchSprite(Animations.Idle);
+  else if (player.velocity.x === 0 && player.lastKey === Direction.Left)
+    player.switchSprite(Animations.IdleLeft);
 
-    if(player.velocity.y < 0) player.switchSprite(Animations.Jump)
-    else if(player.velocity.y > 0) player.switchSprite(Animations.Fall)
+  if (player.velocity.y < 0 && player.lastKey === Direction.Right)
+    player.switchSprite(Animations.Jump);
+  else if (player.velocity < 0 && player.lastKey === Direction.Left)
+    player.switchSprite(Animation.JumpLeft);
+  else if (player.velocity.y > 0 && player.lastKey === Direction.Right)
+    player.switchSprite(Animations.Fall);
+  else if (player.velocity.y > 0 && player.lastKey === Direction.Left)
+    player.switchSprite(Animations.FallLeft);
 
   canvasContext.restore();
 }
