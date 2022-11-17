@@ -2,6 +2,7 @@ class Player extends Sprite {
   constructor({
     position,
     collisionsBlocks,
+    platformCollisionsBlocks,
     imageSrc,
     frameRate,
     scale = 0.5,
@@ -14,6 +15,7 @@ class Player extends Sprite {
       y: 1,
     };
     this.collisionsBlocks = collisionsBlocks;
+    this.platformCollisionsBlocks = platformCollisionsBlocks;
     this.hitbox = {
       position: {
         x: this.position.x,
@@ -27,8 +29,9 @@ class Player extends Sprite {
   }
 
   switchSprite(key) {
-    if (this.image === this.animations[key] || !this.loaded) return;
+    if (this.image === this.animations[key].image || !this.loaded) return;
 
+    this.currentFrame = 0
     this.image = this.animations[key].image;
     this.frameBuffer = this.animations[key].frameBuffer;
     this.frameRate = this.animations[key].frameRate;
@@ -137,6 +140,26 @@ class Player extends Sprite {
 
           this.position.y =
             collision.position.y + collision.height - offset + 0.01;
+          break;
+        }
+      }
+    }
+
+    for (let i = 0; i < this.platformCollisionsBlocks.length; i++) {
+      const collision = this.platformCollisionsBlocks[i];
+      if (
+        platformDetector({
+          object1: this.hitbox,
+          object2: collision,
+        })
+      ) {
+        if (this.velocity.y > 0) {
+          this.velocity.y = 0;
+
+          const offset =
+            this.hitbox.position.y - this.position.y + this.hitbox.height;
+
+          this.position.y = collision.position.y - offset - 0.01;
           break;
         }
       }
