@@ -1,23 +1,12 @@
-class Player {
-  constructor({ position, collisionsBlocks }) {
+class Player extends Sprite{
+  constructor({ position, collisionsBlocks, imageSrc }) {
+    super({ imageSrc });
     this.position = position;
     this.velocity = {
       x: 0,
       y: 1,
     };
-    this.height = 25;
-    this.width = 25;
     this.collisionsBlocks = collisionsBlocks;
-  }
-
-  draw() {
-    canvasContext.fillStyle = "red";
-    canvasContext.fillRect(
-      this.position.x,
-      this.position.y,
-      this.width,
-      this.height
-    );
   }
 
   update() {
