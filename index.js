@@ -11,7 +11,7 @@ const scaledCanvas = {
   width: canvas.width / 4,
   height: canvas.height / 4,
 };
-const gravity = 0.5;
+const gravity = 0.1;
 
 const player = new Player({
   position: {
@@ -72,7 +72,7 @@ function animate() {
     player.velocity.x = -2;
     player.setLastKey(Direction.Left);
   } else if (keysState[Direction.Up].pressed) {
-    player.velocity.y = -5;
+    player.velocity.y = -4;
   } else if (player.velocity.x === 0 && player.lastKey === Direction.Right)
     player.switchSprite(Animations.Idle);
   else if (player.velocity.x === 0 && player.lastKey === Direction.Left)
