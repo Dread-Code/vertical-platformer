@@ -81,3 +81,10 @@ const platformCollisions = [
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
+
+const collisionsMerged = floorCollisions.map((value, index) => {
+  if (platformCollisions[index] >= value) {
+    return platformCollisions[index];
+  }
+  return value;
+});

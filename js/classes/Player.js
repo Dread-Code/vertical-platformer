@@ -1,5 +1,5 @@
 class Player {
-  constructor({ position, floorCollisionsBlocks }) {
+  constructor({ position, collisionsBlocks }) {
     this.position = position;
     this.velocity = {
       x: 0,
@@ -7,7 +7,7 @@ class Player {
     };
     this.height = 25;
     this.width = 25;
-    this.floorCollisionsBlocks = floorCollisionsBlocks;
+    this.collisionsBlocks = collisionsBlocks;
   }
 
   draw() {
@@ -23,9 +23,9 @@ class Player {
   update() {
     this.draw();
     this.position.x += this.velocity.x;
-    this.checkForHorizontalCollision();
+    this.checkForHorizontalCollision(this.collisionsBlocks);
     this.applyGravity();
-    this.checkForVerticalCollision();
+    this.checkForVerticalCollision(this.collisionsBlocks);
   }
 
   applyGravity() {
@@ -33,9 +33,9 @@ class Player {
     this.velocity.y += gravity;
   }
 
-  checkForHorizontalCollision() {
-    for (let i = 0; i < this.floorCollisionsBlocks.length; i++) {
-      const collision = this.floorCollisionsBlocks[i];
+  checkForHorizontalCollision(collisisons) {
+    for (let i = 0; i < collisisons.length; i++) {
+      const collision = collisisons[i];
       if (
         coliisionDetector({
           object1: this,
@@ -56,9 +56,9 @@ class Player {
     }
   }
 
-  checkForVerticalCollision() {
-    for (let i = 0; i < this.floorCollisionsBlocks.length; i++) {
-      const collision = this.floorCollisionsBlocks[i];
+  checkForVerticalCollision(collisisons) {
+    for (let i = 0; i < collisisons.length; i++) {
+      const collision = collisisons[i];
       if (
         coliisionDetector({
           object1: this,
