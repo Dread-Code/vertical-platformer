@@ -17,6 +17,7 @@ const player1 = new Player({
     y: 0,
   },
   collisionsBlocks,
+  imageSrc: './img/warrior/Idle.png'
 });
 
 const background = new Sprite({
@@ -46,16 +47,16 @@ function animate() {
      * to the unities passed through the the function
      */
     canvasContext.translate(0, -background.image.height + scaledCanvas.height);
-  background.update();
-  collisionsBlocks.forEach((collision) => {
-    collision.update();
-  });
+    background.update();
+    collisionsBlocks.forEach((collision) => {
+        collision.update();
+    });
 
-  player1.update();
+    player1.update();
 
-  player1.velocity.x = 0;
-  if (keys.d.pressed) player1.velocity.x = 1;
-  else if (keys.a.pressed) player1.velocity.x = -1;
+    player1.velocity.x = 0;
+    if (keys.d.pressed) player1.velocity.x = 1;
+    else if (keys.a.pressed) player1.velocity.x = -1;
 
   canvasContext.restore();
 }
