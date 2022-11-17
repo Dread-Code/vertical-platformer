@@ -14,7 +14,7 @@ const gravity = 0.5;
 const player1 = new Player({
   position: {
     x: 100,
-    y: 0,
+    y: 300,
   },
   collisionsBlocks,
   imageSrc: './img/warrior/Idle.png',

@@ -6,7 +6,7 @@ class Sprite {
             this.width = (this.image.width / frameRate) * scale;
             this.height = this.image.height * scale;
         }
-        this.image.src = imageSrc;f
+        this.image.src = imageSrc;
         this.frameRate = frameRate;
         this.currentFrame = 0
         this.frameBuffer = frameBuffer;
@@ -43,8 +43,18 @@ class Sprite {
     }
 
     updateFrames(){
+        /**
+         * this.elpasedFrames increase in every iteration
+         */
         this.elapsedFrames++
+        /**
+         * This helps to make the animation slower
+         */
         if (this.elapsedFrames % this.frameBuffer === 0) {
+            /**
+             * when the currentFrame reaches to 7(in the player case)
+             * this.currentFrame will be restart to zero 
+             */
             if(this.currentFrame < this.frameRate - 1) this.currentFrame++
             else this.currentFrame = 0;
         }
