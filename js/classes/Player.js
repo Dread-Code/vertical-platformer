@@ -33,13 +33,13 @@ class Player extends Sprite {
       },
       width: 200,
       height: 80,
-    }
+    };
   }
 
   switchSprite(key) {
     if (this.image === this.animations[key].image || !this.loaded) return;
 
-    this.currentFrame = 0
+    this.currentFrame = 0;
     this.image = this.animations[key].image;
     this.frameBuffer = this.animations[key].frameBuffer;
     this.frameRate = this.animations[key].frameRate;
@@ -49,7 +49,7 @@ class Player extends Sprite {
     this.updateFrames();
     this.updateHitbox();
 
-    this.updateCamera()
+    this.updateCamera();
     // draws out the image
     canvasContext.fillStyle = "rgb(0, 0, 255  , 0.2 )";
     canvasContext.fillRect(
@@ -58,7 +58,6 @@ class Player extends Sprite {
       this.camerabox.width,
       this.camerabox.height
     );
-
 
     // draws out the image
     // canvasContext.fillStyle = "rgb(0, 255, 0, 0.6)";
@@ -77,7 +76,7 @@ class Player extends Sprite {
     //   this.hitbox.width,
     //   this.hitbox.height
     // );
-
+    this.checkForHorizontalCanvasCollision();
     this.draw();
     this.position.x += this.velocity.x;
     this.updateHitbox();
@@ -103,7 +102,7 @@ class Player extends Sprite {
     };
   }
 
-  updateCamera(){
+  updateCamera() {
     this.camerabox = {
       position: {
         x: this.position.x - 60,
@@ -111,27 +110,37 @@ class Player extends Sprite {
       },
       width: 200,
       height: 80,
-    }
+    };
   }
 
-  shouldPanCameraToTheLeft({canvas, camera}){
+  checkForHorizontalCanvasCollision() {
+    if (
+      this.hitbox.position.x + this.hitbox.width + this.velocity.x >= 576 ||
+      this.hitbox.position.x + this.velocity.x <= 0
+    )
+      this.velocity.x = 0;
+  }
+
+  shouldPanCameraToTheLeft({ canvas, camera }) {
     const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width;
     const scaledDownCanvasWidth = canvas.width / 4;
-    if (cameraboxRightSide >= 576) return
-    if (cameraboxRightSide >= scaledDownCanvasWidth + Math.abs(camera.position.x)){
-      camera.position.x -= this.velocity.x
+    if (cameraboxRightSide >= 576) return;
+    if (
+      cameraboxRightSide >=
+      scaledDownCanvasWidth + Math.abs(camera.position.x)
+    ) {
+      camera.position.x -= this.velocity.x;
     }
   }
-  shouldPanCameraToTheRight({canvas, camera}){
+
+  shouldPanCameraToTheRight({ canvas, camera }) {
     const cameraboxLeftSide = this.camerabox.position.x;
-    if (cameraboxLeftSide <= 0) return
+    if (cameraboxLeftSide <= 0) return;
     // camera.position.x is the current translation that have the camera
-    if (cameraboxLeftSide <=  Math.abs(camera.position.x)){
-      camera.position.x -= this.velocity.x
+    if (cameraboxLeftSide <= Math.abs(camera.position.x)) {
+      camera.position.x -= this.velocity.x;
     }
   }
-
-
 
   checkForHorizontalCollision() {
     for (let i = 0; i < this.collisionsBlocks.length; i++) {

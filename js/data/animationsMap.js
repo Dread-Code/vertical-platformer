@@ -12,12 +12,12 @@ const animationsMap = {
   [Animations.Run]: {
     imageSrc: "./img/warrior/Run.png",
     frameRate: 8,
-    frameBuffer: 10,
+    frameBuffer: 16,
   },
   [Animations.RunLeft]: {
     imageSrc: "./img/warrior/RunLeft.png",
     frameRate: 8,
-    frameBuffer: 10,
+    frameBuffer: 16,
   },
   [Animations.Jump]: {
     imageSrc: "./img/warrior/Jump.png",
