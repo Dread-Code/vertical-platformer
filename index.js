@@ -58,13 +58,16 @@ function animate() {
   player.update();
 
   player.velocity.x = 0;
-  if (keys[Direction.Right].pressed) {
+  if (keysState[Direction.Right].pressed) {
     player.switchSprite(Animations.Run);
     player.velocity.x = 2;
-  } else if (keys[Direction.Left].pressed) player.velocity.x = -1;
+  } else if (keysState[Direction.Left].pressed) player.velocity.x = -1;
+  else if (keysState[Direction.Up].pressed) {
+    player.velocity.y = -8;
+    player.switchSprite(Animations.Jump)
+  }
   else if ( player.velocity.x === 0)
     player.switchSprite(Animations.Idle);
-
 
   canvasContext.restore();
 }

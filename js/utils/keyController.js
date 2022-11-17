@@ -5,13 +5,13 @@
  window.addEventListener("keydown", (event) => {
     switch (event.key) {
       case Direction.Right:
-        keys[Direction.Right].pressed = true;
+        keysState[Direction.Right].pressed = true;
         break;
       case Direction.Left:
-        keys[Direction.Left].pressed = true;
+        keysState[Direction.Left].pressed = true;
         break;
       case Direction.Up:
-        player.velocity.y = -8;
+        keysState[Direction.Up].pressed = true;
         break;
       default:
         break;
@@ -21,10 +21,13 @@
   window.addEventListener("keyup", (event) => {
     switch (event.key) {
       case Direction.Right:
-        keys[Direction.Right].pressed = false;
+        keysState[Direction.Right].pressed = false;
         break;
       case Direction.Left:
-        keys[Direction.Left].pressed = false;
+        keysState[Direction.Left].pressed = false;
+        break;
+      case Direction.Up:
+        keysState[Direction.Up].pressed = false;
         break;
       default:
         break;

@@ -9,4 +9,9 @@ const animationsMap = {
         frameRate: 8,
         frameBuffer: 10
     },
+    [Animations.Jump]: {
+        imageSrc: './img/warrior/Jump.png',
+        frameRate: 2,
+        frameBuffer: 3
+    },
 }
