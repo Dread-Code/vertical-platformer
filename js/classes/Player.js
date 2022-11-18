@@ -142,6 +142,32 @@ class Player extends Sprite {
     }
   }
 
+  shouldPanCameraDown({ canvas, camera }) {
+    if (this.camerabox.position.y  <= 0) return;
+
+    if (this.camerabox.position.y - 20 <= Math.abs(camera.position.y)) {
+      console.log('object');
+      camera.position.y -= this.velocity.y;
+    }
+  }
+
+  shouldPanCameraUp({ canvas, camera }) {
+    if (
+      this.camerabox.position.y + this.camerabox.height + this.velocity.y >=
+      432
+    )
+      return;
+
+    const scaledCanvasHeight = canvas.height / 4;
+
+    if (
+      this.camerabox.position.y + this.camerabox.height >=
+      Math.abs(camera.position.y) + scaledCanvasHeight
+    ) {
+      camera.position.y -= this.velocity.y;
+    }
+  }
+
   checkForHorizontalCollision() {
     for (let i = 0; i < this.collisionsBlocks.length; i++) {
       const collision = this.collisionsBlocks[i];

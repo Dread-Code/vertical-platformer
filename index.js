@@ -2,7 +2,10 @@ const canvas = document.querySelector("canvas");
 const canvasContext = canvas.getContext("2d"); // Where passing what kind of API we want to wrap 2d or 3d
 
 const collisionsBlocks = collisionBlocksGenerator(floorCollisions);
-const platformCollisionsBlocks = collisionBlocksGenerator(platformCollisions, 4);
+const platformCollisionsBlocks = collisionBlocksGenerator(
+  platformCollisions,
+  4
+);
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -34,11 +37,11 @@ const background = new Sprite({
 });
 
 const camera = {
-    position: {
-        x: 0,
-        y: 0,
-    },
-}
+  position: {
+    x: 0,
+    y: -432 + scaledCanvas.height,
+  },
+};
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
@@ -58,7 +61,7 @@ function animate() {
    * Translate the origin position background.position {x: 0, y: 0}
    * to the unities passed through the the function
    */
-  canvasContext.translate(camera.position.x, -background.image.height + scaledCanvas.height);
+  canvasContext.translate(camera.position.x, camera.position.y);
   background.update();
   collisionsBlocks.forEach((collision) => {
     collision.update();
@@ -81,20 +84,24 @@ function animate() {
     player.setLastKey(Direction.Left);
     player.shouldPanCameraToTheRight({ canvas, camera });
   } else if (keysState[Direction.Up].pressed) {
+    player.shouldPanCameraDown({ canvas, camera });
     player.velocity.y = -3;
   } else if (player.velocity.x === 0 && player.lastKey === Direction.Right)
     player.switchSprite(Animations.Idle);
   else if (player.velocity.x === 0 && player.lastKey === Direction.Left)
     player.switchSprite(Animations.IdleLeft);
+  else if(player.velocity.x === 0) player.switchSprite(Animations.Idle);
 
   if (player.velocity.y < 0 && player.lastKey === Direction.Right)
     player.switchSprite(Animations.Jump);
   else if (player.velocity < 0 && player.lastKey === Direction.Left)
     player.switchSprite(Animation.JumpLeft);
-  else if (player.velocity.y > 0 && player.lastKey === Direction.Right)
-    player.switchSprite(Animations.Fall);
-  else if (player.velocity.y > 0 && player.lastKey === Direction.Left)
-    player.switchSprite(Animations.FallLeft);
+  else if (player.velocity.y > 0) {
+    player.shouldPanCameraUp({ canvas, camera });
+    if (player.lastKey === Direction.Right)
+      player.switchSprite(Animations.Fall);
+    else player.switchSprite(Animations.FallLeft);
+  }
 
   canvasContext.restore();
 }
