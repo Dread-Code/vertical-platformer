@@ -50,14 +50,14 @@ class Player extends Sprite {
     this.updateHitbox();
 
     this.updateCamera();
-    // draws out the image
-    canvasContext.fillStyle = "rgb(0, 0, 255  , 0.2 )";
-    canvasContext.fillRect(
-      this.camerabox.position.x,
-      this.camerabox.position.y,
-      this.camerabox.width,
-      this.camerabox.height
-    );
+    // draws out the camerabox
+    // canvasContext.fillStyle = "rgb(0, 0, 255  , 0.2 )";
+    // canvasContext.fillRect(
+    //   this.camerabox.position.x,
+    //   this.camerabox.position.y,
+    //   this.camerabox.width,
+    //   this.camerabox.height
+    // );
 
     // draws out the image
     // canvasContext.fillStyle = "rgb(0, 255, 0, 0.6)";
@@ -68,7 +68,7 @@ class Player extends Sprite {
     //   this.height
     // );
 
-    // // draws out the hitbox
+    // draws out the hitbox
     // canvasContext.fillStyle = "rgb(255, 0, 0, 0.5)";
     // canvasContext.fillRect(
     //   this.hitbox.position.x,

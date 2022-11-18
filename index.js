@@ -63,12 +63,12 @@ function animate() {
    */
   canvasContext.translate(camera.position.x, camera.position.y);
   background.update();
-  collisionsBlocks.forEach((collision) => {
-    collision.update();
-  });
-  platformCollisionsBlocks.forEach((collision) => {
-    collision.update();
-  });
+//   collisionsBlocks.forEach((collision) => {
+//     collision.update();
+//   });
+//   platformCollisionsBlocks.forEach((collision) => {
+//     collision.update();
+//   });
 
   player.update();
 
